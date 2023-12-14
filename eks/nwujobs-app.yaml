@@ -1,0 +1,56 @@
+# Deploument
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nwujobs
+  labels:
+    app: nwujobs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nwujobs
+  template:
+    metadata:
+      labels:
+        app: nwujobs
+    spec:
+      containers:
+      - name: nwujobs
+        image: bjnandi/nwujobs-nwu-final-year-project:latest
+        ports:
+        - containerPort: 80
+---
+# Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: nwujobs-svc
+spec:
+  selector:
+    app: nwujobs
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---
+# Ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nwujobs
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: nwujobs.bjtechlife.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nwujobs-svc
+            port:
+              number: 80
