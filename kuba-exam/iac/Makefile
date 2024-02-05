@@ -3,6 +3,7 @@
 # Delete also same resources
 
 # all_resources delete_resources
+# if can not delete any resources with "delete_resources" delete Manually.
 
 # Variables
 VPC_NAME=MyVPC
