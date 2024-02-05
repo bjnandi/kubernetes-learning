@@ -1,0 +1,56 @@
+# Deploument
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cv
+  labels:
+    app: cv
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: cv
+  template:
+    metadata:
+      labels:
+        app: cv
+    spec:
+      containers:
+      - name: c
+        image: bjnandi/cv:latest
+        ports:
+        - containerPort: 80
+---
+# Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: cv-svc
+spec:
+  selector:
+    app: cv
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---
+# Ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cv
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: cv.bjtechlife.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: cv-svc
+            port:
+              number: 80

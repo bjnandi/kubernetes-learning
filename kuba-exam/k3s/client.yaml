@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: client-svc
+  labels:
+    app: client
+spec:
+  type: NodePort
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80 
+    nodePort: 30001
+  selector:
+    app: client
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client
+  labels:
+    app: client
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: client
+  template:
+    metadata:
+      labels:
+        app: client
+    spec:
+      containers:
+      - name: client
+        image: bjnandi/crud-app-mern-client:v1.0.1
+        ports:
+        - containerPort: 80
