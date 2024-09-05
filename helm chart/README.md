@@ -7,7 +7,8 @@ helm install postgresql bitnami/postgresql -f values.yaml
 helm uninstall postgresql
 ```
  <hr>
- # Helm chart install
+ 
+# Helm chart install
 
 Step 1: Install Helm chart
 
