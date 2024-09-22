@@ -54,3 +54,10 @@ Reference
 https://medium.com/@vijayalakshmiyvl/deploy-your-first-helm-chart-in-kubernetes-cluster-20f5e33e58b6
 ```
 
+
+```
+helm list -n monitoring
+```
+```
+helm show values prometheus-community/prometheus-nginx-exporter
+```
